@@ -48,7 +48,7 @@ const loginUser = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error("All fields are mandatory")
     }
-    const user = Users.findOne({ email })
+    const user = await Users.findOne({ email })
 
     // compare password with hashed password
     if (user && (await bcrypt.compare(password, user.password))) {
@@ -59,7 +59,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 id: user.id,
             }
         }, process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "1m" }
+            { expiresIn: "10m" }
         )
         // if it matches then provide a access token
         res.status(200).json({ accessToken });
