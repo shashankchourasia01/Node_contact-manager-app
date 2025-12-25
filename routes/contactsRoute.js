@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const validateToken = require('../middleware/validateTokenHandler.js')
 const {
   getContacts,
   createContacts,
@@ -7,6 +8,9 @@ const {
   updateContact,
   deleteContact,
 } = require("../controllers/contactController.js");
+
+//now use of validate token to all protected routes so the only logged in user or contacts should CRUD operation
+router.use(validateToken)
 
 // @route   GET /api/contacts  and POST /api/contacts
 router.route("/").get(getContacts).post(createContacts);
