@@ -12,6 +12,8 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('all fields are required')
     }
+
+    //check that user is already available or not
     const userAvailable = await Users.findOne({ email });
     if (userAvailable) {
         res.status(400);
@@ -52,6 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // compare password with hashed password
     if (user && (await bcrypt.compare(password, user.password))) {
+        // give user to access token.
         const accessToken = jwt.sign({
             user: {
                 username: user.username,
