@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
       res.json({
         title: "Validation Error",
         message: err.message,
+        //stack trace batata hai ki exact error kaha pe hai or error ka location kaha pe hai
         stackTrace: err.stack,
       });
       break;
